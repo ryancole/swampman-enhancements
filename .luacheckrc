@@ -13,9 +13,9 @@ ignore = {
 
 -- Globals this addon is allowed to create or assign
 globals = {
-    "QuestAcceptDB", -- SavedVariables
-    "SLASH_QUESTACCEPT1",
-    "SLASH_QUESTACCEPT2",
+    "SwampyForeverEnhancementsDB", -- SavedVariables
+    "SLASH_SWAMPY1",
+    "SLASH_SWAMPY2",
     "SlashCmdList",
 }
 
@@ -25,13 +25,16 @@ read_globals = {
     "strlower", "strsplit", "strtrim",
     -- API functions
     "AcceptQuest", "AcknowledgeAutoAcceptQuest", "CompleteQuest",
-    "CreateFrame", "GetActiveTitle", "GetAvailableTitle",
+    "ConfirmAcceptQuest", "CreateFrame", "CreateMinimalSliderFormatter", "GetActiveTitle",
+    "hooksecurefunc",
+    "GetAvailableTitle",
     "GetNumActiveQuests", "GetNumAvailableQuests", "GetNumQuestChoices",
     "GetQuestReward", "GetTitleText", "IsQuestCompletable", "IsShiftKeyDown",
     "QuestFlagsPVP", "QuestGetAutoAccept", "SelectActiveQuest",
     "SelectAvailableQuest",
     -- Namespaces
-    "C_AddOns", "C_GossipInfo", "Settings",
+    "ActionButtonUtil", "C_AddOns", "C_CVar", "C_GossipInfo", "MinimalSliderWithSteppersMixin",
+    "Settings",
     -- Frames, fonts, and constants
     "GameFontHighlight", "NORMAL_FONT_COLOR", "WHITE_FONT_COLOR",
 }

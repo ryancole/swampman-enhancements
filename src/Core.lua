@@ -1,33 +1,37 @@
 local ADDON_NAME, ns = ...
 
-local opts -- QuestAcceptDB.options (account-wide)
+local opts -- SwampyForeverEnhancementsDB.options (account-wide)
 
 -------------------------------------------------------------------------------
 -- SavedVariables
 -------------------------------------------------------------------------------
--- Everything is account-wide: whether quests are picked up and handed in
--- automatically doesn't vary between characters.
+-- Everything is account-wide: none of these tweaks vary between characters.
 --
--- QuestAcceptDB = {
+-- SwampyForeverEnhancementsDB = {
 --   version = 1,
 --   options = { ... },
 -- }
 
 ns.optionDefaults = {
-    enabled = true,  -- master switch; off, the addon does nothing
-    accept = true,   -- pick up quests NPCs offer
-    turnIn = true,   -- hand in finished quests
+    enabled = true,    -- quest automation master switch; off, no NPC clicks are taken
+    accept = true,     -- pick up quests NPCs offer
+    turnIn = true,     -- hand in finished quests
+    castAnim = true,   -- show the cast animation on action buttons (see ActionBars.lua)
+    -- CVars.lua adds a default for each of its toggles that has one (the
+    -- navigation pin); the rest, and cameraZoom from Camera.lua, are absent
+    -- until set, so those CVars are left alone until they're first touched
 }
 
 local function InitDB()
-    QuestAcceptDB = QuestAcceptDB or { version = 1 }
-    QuestAcceptDB.options = QuestAcceptDB.options or {}
-    opts = QuestAcceptDB.options
+    SwampyForeverEnhancementsDB = SwampyForeverEnhancementsDB or { version = 1 }
+    SwampyForeverEnhancementsDB.options = SwampyForeverEnhancementsDB.options or {}
+    opts = SwampyForeverEnhancementsDB.options
     for k, v in next, ns.optionDefaults do
         if opts[k] == nil then
             opts[k] = v
         end
     end
+    ns.opts = opts -- shared with the other files
 end
 
 -------------------------------------------------------------------------------
@@ -39,6 +43,8 @@ end
 --
 --   GOSSIP_SHOW / QUEST_GREETING  the NPC's list of quests: pick one
 --   QUEST_DETAIL                  a quest offer: accept it
+--   QUEST_ACCEPT_CONFIRM          a party member started an escort quest:
+--                                 confirm joining it
 --   QUEST_PROGRESS                a hand-in check: continue if it's done
 --   QUEST_COMPLETE                the reward page: take it, unless there's
 --                                 a choice to make
@@ -49,7 +55,7 @@ end
 -- handed in before new ones are taken.
 --
 -- Holding Shift while talking to an NPC pauses all of this, so a quest can
--- be read, or left alone, without turning the addon off.
+-- be read, or left alone, without turning the automation off.
 
 local function Active()
     return opts.enabled and not IsShiftKeyDown()
@@ -114,6 +120,16 @@ local function OnQuestDetail()
     end
 end
 
+-- QUEST_ACCEPT_CONFIRM: a party member has started an escort quest and the
+-- client asks whether to join in. There is no offer page for these, just a
+-- yes/no popup, so this is the accept step for that kind of quest.
+local function OnQuestAcceptConfirm()
+    if not Active() or not opts.accept then
+        return
+    end
+    ConfirmAcceptQuest()
+end
+
 -- QUEST_PROGRESS: the "are you done yet" page. Continue only when the
 -- objectives are met; otherwise the page stays up, as it would by hand.
 local function OnQuestProgress()
@@ -149,6 +165,7 @@ frame:RegisterEvent("ADDON_LOADED")
 frame:RegisterEvent("GOSSIP_SHOW")
 frame:RegisterEvent("QUEST_GREETING")
 frame:RegisterEvent("QUEST_DETAIL")
+frame:RegisterEvent("QUEST_ACCEPT_CONFIRM")
 frame:RegisterEvent("QUEST_PROGRESS")
 frame:RegisterEvent("QUEST_COMPLETE")
 
@@ -156,6 +173,7 @@ local handlers = {
     GOSSIP_SHOW = OnGossipShow,
     QUEST_GREETING = OnQuestGreeting,
     QUEST_DETAIL = OnQuestDetail,
+    QUEST_ACCEPT_CONFIRM = OnQuestAcceptConfirm,
     QUEST_PROGRESS = OnQuestProgress,
     QUEST_COMPLETE = OnQuestComplete,
 }
@@ -179,7 +197,7 @@ end)
 -------------------------------------------------------------------------------
 
 local function Print(msg)
-    print("|cff33ff99Quest Accept:|r " .. msg)
+    print("|cff33ff99Swampy:|r " .. msg)
 end
 
 local function OnOff(flag)
@@ -187,9 +205,20 @@ local function OnOff(flag)
 end
 
 local function PrintStatus()
-    Print(("%s (accept %s, turn in %s). Hold Shift to pause."):format(
+    Print(("quest automation %s (accept %s, turn in %s), navigation pin %s, always sharpen %s, camera zoom %s, cast animation %s. Hold Shift to pause quests."):format(
         opts.enabled and "enabled" or "disabled",
-        OnOff(opts.accept), OnOff(opts.turnIn)))
+        OnOff(opts.accept), OnOff(opts.turnIn),
+        OnOff(ns.GetCVarToggle("navigation")), OnOff(ns.GetCVarToggle("sharpen")),
+        tostring(ns.GetCameraZoom() or "n/a"), OnOff(opts.castAnim)))
+end
+
+-- The CVar toggle whose slash command this is, if any
+local function ToggleForCommand(cmd)
+    for key, toggle in pairs(ns.cvarToggles) do
+        if toggle.command == cmd then
+            return key
+        end
+    end
 end
 
 -- Parses "on"/"off" (or nothing, meaning toggle) into the new value
@@ -202,9 +231,9 @@ local function Parse(word, current)
     return not current
 end
 
-SLASH_QUESTACCEPT1 = "/qa"
-SLASH_QUESTACCEPT2 = "/questaccept"
-SlashCmdList.QUESTACCEPT = function(msg)
+SLASH_SWAMPY1 = "/sfe"
+SLASH_SWAMPY2 = "/swampy"
+SlashCmdList.SWAMPY = function(msg)
     local cmd, arg = strsplit(" ", strlower(strtrim(msg or "")), 2)
     if cmd == "on" or cmd == "off" then
         opts.enabled = cmd == "on"
@@ -218,17 +247,36 @@ SlashCmdList.QUESTACCEPT = function(msg)
     elseif cmd == "turnin" then
         opts.turnIn = Parse(arg, opts.turnIn)
         PrintStatus()
+    elseif ToggleForCommand(cmd) then
+        local key = ToggleForCommand(cmd)
+        ns.SetCVarToggle(key, Parse(arg, ns.GetCVarToggle(key)))
+        PrintStatus()
+    elseif cmd == "castanim" then
+        opts.castAnim = Parse(arg, opts.castAnim)
+        ns.ApplyCastAnim()
+        PrintStatus()
+    elseif cmd == "zoom" then
+        if tonumber(arg) then
+            ns.SetCameraZoom(arg)
+        elseif arg and arg ~= "" then
+            Print("zoom takes a number, e.g. /sfe zoom 2.6")
+        end
+        PrintStatus()
     elseif cmd == "" or cmd == "status" then
         PrintStatus()
     elseif cmd == "options" then
         ns.OpenOptions()
     else
         Print("commands:")
-        print("  /qa - show what's on")
-        print("  /qa on | off | toggle - the whole addon")
-        print("  /qa accept [on|off] - picking up quests")
-        print("  /qa turnin [on|off] - handing in quests")
-        print("  /qa options - open the settings panel")
-        print("  Hold Shift while talking to an NPC to do it by hand.")
+        print("  /sfe - show what's on")
+        print("  /sfe on | off | toggle - quest automation as a whole")
+        print("  /sfe accept [on|off] - picking up quests")
+        print("  /sfe turnin [on|off] - handing in quests")
+        print("  /sfe nav [on|off] - the in-game navigation pin")
+        print("  /sfe zoom [value] - max camera distance (e.g. 2.6)")
+        print("  /sfe sharpen [on|off] - always apply resample sharpening")
+        print("  /sfe castanim [on|off] - the cast animation on action buttons")
+        print("  /sfe options - open the settings panel")
+        print("  Hold Shift while talking to an NPC to handle a quest by hand.")
     end
 end

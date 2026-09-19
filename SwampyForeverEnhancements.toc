@@ -1,0 +1,14 @@
+## Interface: 16001
+## Title: Swampy Forever Enhancements
+## Notes: Quality-of-life tweaks for WoW Forever: automatic quest accept and turn in, the in-game navigation pin, and a wider max camera distance.
+## Category: Quests & Leveling
+## Author: Ryan
+## Version: @project-version@
+## IconTexture: Interface\AddOns\SwampyForeverEnhancements\assets\logo.tga
+## SavedVariables: SwampyForeverEnhancementsDB
+
+src\Core.lua
+src\CVars.lua
+src\Camera.lua
+src\ActionBars.lua
+src\Options.lua

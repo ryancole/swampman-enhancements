@@ -1,6 +1,6 @@
-# Quest Accept logo: the quest giver's gold "!" on a rolled parchment scroll,
-# with a green check badge at the corner for the hand-in. Drawn at 4x and
-# downsampled.
+# Swampy Forever Enhancements logo: the quest giver's gold "!" on a rolled parchment
+# scroll, with a green check badge at the corner for the hand-in. Drawn at 4x
+# and downsampled.
 #
 # Writes into ../assets:
 #   logo.png  1024x1024, project art (repo-only, not shipped)
