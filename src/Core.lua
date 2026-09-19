@@ -164,6 +164,7 @@ frame:SetScript("OnEvent", function(self, event, arg1)
     if event == "ADDON_LOADED" then
         if arg1 == ADDON_NAME then
             InitDB()
+            ns.SetupOptions()
             self:UnregisterEvent("ADDON_LOADED")
         end
         return
@@ -219,12 +220,15 @@ SlashCmdList.QUESTACCEPT = function(msg)
         PrintStatus()
     elseif cmd == "" or cmd == "status" then
         PrintStatus()
+    elseif cmd == "options" then
+        ns.OpenOptions()
     else
         Print("commands:")
         print("  /qa - show what's on")
         print("  /qa on | off | toggle - the whole addon")
         print("  /qa accept [on|off] - picking up quests")
         print("  /qa turnin [on|off] - handing in quests")
+        print("  /qa options - open the settings panel")
         print("  Hold Shift while talking to an NPC to do it by hand.")
     end
 end

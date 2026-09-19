@@ -31,5 +31,7 @@ read_globals = {
     "QuestFlagsPVP", "QuestGetAutoAccept", "SelectActiveQuest",
     "SelectAvailableQuest",
     -- Namespaces
-    "C_AddOns", "C_GossipInfo",
+    "C_AddOns", "C_GossipInfo", "Settings",
+    -- Frames, fonts, and constants
+    "GameFontHighlight", "NORMAL_FONT_COLOR", "WHITE_FONT_COLOR",
 }

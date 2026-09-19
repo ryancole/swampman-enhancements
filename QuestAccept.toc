@@ -8,3 +8,4 @@
 ## SavedVariables: QuestAcceptDB
 
 src\Core.lua
+src\Options.lua

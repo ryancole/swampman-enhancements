@@ -11,6 +11,7 @@ the item and turn it in yourself.
 - `QuestAccept.toc` — addon manifest (must stay at the repo root — WoW
   looks for it at the top of the addon folder)
 - `src/Core.lua` — SavedVariables, the quest event handlers, slash commands
+- `src/Options.lua` — settings panel (Options -> AddOns -> Quest Accept)
 - `assets/` — `logo.png` is the project art; `logo.tga` (addon list icon)
   is baked from it by `etc/logo.py` (Python + Pillow)
 - `etc/check.ps1` — local lint (luacheck and a LuaJIT parse over `src`)
@@ -78,5 +79,13 @@ git tag v0.1.0 && git push origin master --tags
 - `/qa on` / `/qa off` / `/qa toggle` — the whole addon
 - `/qa accept [on|off]` — picking up quests (toggles with no argument)
 - `/qa turnin [on|off]` — handing in quests (toggles with no argument)
+- `/qa options` — open the settings panel
+
+## Options
+
+Under Options -> AddOns -> Quest Accept, or `/qa options`:
+
+- Enable auto accept (on by default)
+- Enable auto turn in (on by default)
 
 Settings are account-wide and saved between sessions.
