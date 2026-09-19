@@ -137,9 +137,9 @@ same luacheck on every push.
 Releases are built by the [BigWigs packager](https://github.com/BigWigsMods/packager)
 via GitHub Actions (`.github/workflows/release.yml`). Pushing a tag like
 `v0.1.0` packages the addon (with `@project-version@` in the .toc replaced
-by the tag) and publishes it as a GitHub release. To upload to CurseForge
-as well, add a `## X-Curse-Project-ID` line to the .toc and a `CF_API_KEY`
-repo secret.
+by the tag) and publishes it as a GitHub release. The .toc carries the
+CurseForge project ID, so with a `CF_API_KEY` repository secret set on
+GitHub the same run uploads the zip to CurseForge too.
 
 ```bash
 git tag v0.1.0 && git push origin master --tags

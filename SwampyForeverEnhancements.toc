@@ -6,6 +6,7 @@
 ## Version: @project-version@
 ## IconTexture: Interface\AddOns\SwampyForeverEnhancements\assets\logo.tga
 ## SavedVariables: SwampyForeverEnhancementsDB
+## X-Curse-Project-ID: 1702316
 
 src\Core.lua
 src\CVars.lua
