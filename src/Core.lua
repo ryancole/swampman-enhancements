@@ -17,6 +17,7 @@ ns.optionDefaults = {
     accept = true,     -- pick up quests NPCs offer
     turnIn = true,     -- hand in finished quests
     castAnim = true,   -- show the cast animation on action buttons (see ActionBars.lua)
+    totemBarRight = false, -- lay the totem bar's buttons out from its right edge (see TotemBar.lua)
     -- CVars.lua adds a default for each of its toggles that has one (the
     -- navigation pin); the rest, and cameraZoom from Camera.lua, are absent
     -- until set, so those CVars are left alone until they're first touched
@@ -205,11 +206,12 @@ local function OnOff(flag)
 end
 
 local function PrintStatus()
-    Print(("quest automation %s (accept %s, turn in %s), navigation pin %s, always sharpen %s, camera zoom %s, cast animation %s. Hold Shift to pause quests."):format(
+    Print(("quest automation %s (accept %s, turn in %s), navigation pin %s, always sharpen %s, camera zoom %s, cast animation %s, totem bar aligned %s. Hold Shift to pause quests."):format(
         opts.enabled and "enabled" or "disabled",
         OnOff(opts.accept), OnOff(opts.turnIn),
         OnOff(ns.GetCVarToggle("navigation")), OnOff(ns.GetCVarToggle("sharpen")),
-        tostring(ns.GetCameraZoom() or "n/a"), OnOff(opts.castAnim)))
+        tostring(ns.GetCameraZoom() or "n/a"), OnOff(opts.castAnim),
+        opts.totemBarRight and "right" or "left"))
 end
 
 -- The CVar toggle whose slash command this is, if any
@@ -255,6 +257,16 @@ SlashCmdList.SWAMPMAN = function(msg)
         opts.castAnim = Parse(arg, opts.castAnim)
         ns.ApplyCastAnim()
         PrintStatus()
+    elseif cmd == "totembar" then
+        if arg == "left" or arg == "right" then
+            opts.totemBarRight = arg == "right"
+        elseif arg and arg ~= "" then
+            Print("totembar takes left or right")
+        else
+            opts.totemBarRight = not opts.totemBarRight
+        end
+        ns.ApplyTotemBarAlign()
+        PrintStatus()
     elseif cmd == "zoom" then
         if tonumber(arg) then
             ns.SetCameraZoom(arg)
@@ -276,6 +288,7 @@ SlashCmdList.SWAMPMAN = function(msg)
         print("  /sme zoom [value] - max camera distance (e.g. 2.6)")
         print("  /sme sharpen [on|off] - always apply resample sharpening")
         print("  /sme castanim [on|off] - the cast animation on action buttons")
+        print("  /sme totembar [left|right] - which edge of its box the totem bar fills from")
         print("  /sme options - open the settings panel")
         print("  Hold Shift while talking to an NPC to handle a quest by hand.")
     end

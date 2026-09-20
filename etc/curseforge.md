@@ -5,9 +5,9 @@ field and the description into the description editor (Markdown mode).
 
 ## Summary
 
-Small quality-of-life tweaks for WoW Forever: quests are accepted and turned in for you, the hidden in-game navigation pin gets its checkbox back, the camera zooms out further than the settings menu allows, and the cast animation on action buttons can be switched off. No libraries, no setup.
+Small quality-of-life tweaks for WoW Forever: quests are accepted and turned in for you, the hidden in-game navigation pin gets its checkbox back, the camera zooms out further than the settings menu allows, the cast animation on action buttons can be switched off, and the shaman totem bar can fill from its right edge. No libraries, no setup.
 
-Short form: Auto quest accept and turn in, the hidden navigation pin, a farther camera, and no button cast animations for WoW Forever.
+Short form: Auto quest accept and turn in, the hidden navigation pin, a farther camera, no button cast animations, and a right-aligned totem bar for WoW Forever.
 
 ## Description
 
@@ -48,6 +48,10 @@ The Graphics settings' Resample Sharpness filter normally only applies while the
 
 The fill that sweeps across a button's icon while its spell is cast or channelled has no setting anywhere in the game. Untick it here and it's gone. The cooldown swipe and everything else on the button keep working as normal.
 
+### Totem bar alignment
+
+The shaman totem bar is a fixed-width box that Edit Mode moves as a whole, but its buttons always fill it from the left, so until you know all four totem elements there's a gap on the right. Tick this and the buttons fill the box from its right edge instead, so the bar can sit flush against whatever is to its right. Changes apply out of combat.
+
 ## Options
 
 All settings are account-wide and saved between sessions.
@@ -56,7 +60,7 @@ All settings are account-wide and saved between sessions.
 - **Navigation:** Show the in-game navigation pin
 - **Camera:** Max camera distance slider and value box
 - **Graphics:** Always sharpen
-- **Action bars:** Show the cast animation on buttons
+- **Action bars:** Show the cast animation on buttons, Align the totem bar's buttons to the right
 
 Settings that mirror a game setting are left untouched until you change them, so installing the addon doesn't alter anything by itself apart from turning the navigation pin on.
 
@@ -72,6 +76,7 @@ Settings that mirror a game setting are left untouched until you change them, so
 - `/sme zoom <value>` — max camera distance, e.g. `/sme zoom 2.6`
 - `/sme sharpen [on|off]` — always apply resample sharpening
 - `/sme castanim [on|off]` — the cast animation on action buttons
+- `/sme totembar [left|right]` — which edge of its box the totem bar fills from
 - `/sme options` — open the settings panel
 
 Commands that take `on|off` toggle when given no argument.

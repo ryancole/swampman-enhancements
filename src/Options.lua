@@ -225,10 +225,28 @@ function ns.SetupOptions()
             ns.ApplyCastAnim()
         end)
     castAnimCheck:SetPoint("TOPLEFT", barsHeader, "BOTTOMLEFT", -4, -6)
-    MakeNote(panel,
+    local castAnimNote = MakeNote(panel,
         "The fill that sweeps over a button's icon while its spell is cast or channelled. "
         .. "The game has no setting for this; unticked, the addon hides it as it starts.",
         castAnimCheck)
+
+    local totemCheck = MakeCheckbox(panel, "Align the totem bar's buttons to the right",
+        function() return opts.totemBarRight end,
+        function(v)
+            opts.totemBarRight = v
+            ns.ApplyTotemBarAlign()
+        end)
+    totemCheck:SetPoint("TOPLEFT", castAnimNote, "BOTTOMLEFT", -30, -8)
+    local totemNoteText = "The shaman totem bar is a fixed-width box that Edit Mode moves as a whole, and "
+        .. "its buttons fill it from the left, leaving a gap on the right until all four totem "
+        .. "elements are known. Ticked, they fill it from the right edge instead. Takes effect "
+        .. "out of combat."
+    if not ns.HasTotemBar() then
+        totemNoteText = totemNoteText .. "\n|cffff8000Not available: this build of the client has no totem bar.|r"
+        totemCheck:Disable()
+        totemCheck.Text:SetTextColor(0.5, 0.5, 0.5)
+    end
+    MakeNote(panel, totemNoteText, totemCheck)
 
     -- Required no-op handlers for canvas settings panels
     panel.OnCommit = function() end

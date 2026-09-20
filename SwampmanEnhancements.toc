@@ -12,4 +12,5 @@ src\Core.lua
 src\CVars.lua
 src\Camera.lua
 src\ActionBars.lua
+src\TotemBar.lua
 src\Options.lua
