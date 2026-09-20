@@ -24,6 +24,9 @@ ns.optionDefaults = {
 }
 
 local function InitDB()
+    -- Nothing came back from disk: a first run, or the saved file didn't
+    -- load. Reported at PLAYER_LOGIN so a silent reset is noticed.
+    ns.freshDB = SwampmanEnhancementsDB == nil
     SwampmanEnhancementsDB = SwampmanEnhancementsDB or { version = 1 }
     SwampmanEnhancementsDB.options = SwampmanEnhancementsDB.options or {}
     opts = SwampmanEnhancementsDB.options
@@ -185,7 +188,15 @@ frame:SetScript("OnEvent", function(self, event, arg1)
             InitDB()
             ns.SetupOptions()
             self:UnregisterEvent("ADDON_LOADED")
+            if ns.freshDB then
+                self:RegisterEvent("PLAYER_LOGIN")
+            end
         end
+        return
+    elseif event == "PLAYER_LOGIN" then
+        print("|cff33ff99Swampman:|r no saved settings were found, so the defaults are in use "
+            .. "(first run, or the saved variables file didn't load).")
+        self:UnregisterEvent("PLAYER_LOGIN")
         return
     end
     if opts then

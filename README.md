@@ -154,6 +154,11 @@ New-Item -ItemType Junction `
 `/reload` in-game picks up Lua changes; a full restart is only needed for
 `.toc` changes.
 
+If the addon's saved variables don't come back from disk at load (a first
+run, or the file failed to load), it says so in chat at `PLAYER_LOGIN`
+and runs on defaults. Seeing that message on a launch that isn't the first
+means the client dropped the saved settings.
+
 `.\etc\check.ps1` runs luacheck and a LuaJIT parse over `src`; CI runs the
 same luacheck on every push.
 
