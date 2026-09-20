@@ -13,9 +13,9 @@ ignore = {
 
 -- Globals this addon is allowed to create or assign
 globals = {
-    "SwampyForeverEnhancementsDB", -- SavedVariables
-    "SLASH_SWAMPY1",
-    "SLASH_SWAMPY2",
+    "SwampmanEnhancementsDB", -- SavedVariables
+    "SLASH_SWAMPMAN1",
+    "SLASH_SWAMPMAN2",
     "SlashCmdList",
 }
 

@@ -11,11 +11,11 @@ Short form: Auto quest accept and turn in, the hidden navigation pin, a farther 
 
 ## Description
 
-# Swampy Forever Enhancements
+# Swampman Enhancements
 
 A small bundle of quality-of-life tweaks for **WoW Forever**. Each one is either something the game can already do but hides from its settings menu, or a small automation that saves clicks. Everything is optional, everything is off in one click, and there are no libraries or dependencies.
 
-Open the options with `/sfe options`, or find it under **Options → AddOns → Swampy Forever Enhancements**.
+Open the options with `/sme options`, or find it under **Options → AddOns → Swampman Enhancements**.
 
 ## What it does
 
@@ -62,17 +62,17 @@ Settings that mirror a game setting are left untouched until you change them, so
 
 ## Slash commands
 
-`/sfe` or `/swampy`
+`/sme` or `/swampman`
 
-- `/sfe` — show what's on
-- `/sfe on` / `/sfe off` — quest automation as a whole
-- `/sfe accept [on|off]` — picking up quests
-- `/sfe turnin [on|off]` — handing in quests
-- `/sfe nav [on|off]` — the in-game navigation pin
-- `/sfe zoom <value>` — max camera distance, e.g. `/sfe zoom 2.6`
-- `/sfe sharpen [on|off]` — always apply resample sharpening
-- `/sfe castanim [on|off]` — the cast animation on action buttons
-- `/sfe options` — open the settings panel
+- `/sme` — show what's on
+- `/sme on` / `/sme off` — quest automation as a whole
+- `/sme accept [on|off]` — picking up quests
+- `/sme turnin [on|off]` — handing in quests
+- `/sme nav [on|off]` — the in-game navigation pin
+- `/sme zoom <value>` — max camera distance, e.g. `/sme zoom 2.6`
+- `/sme sharpen [on|off]` — always apply resample sharpening
+- `/sme castanim [on|off]` — the cast animation on action buttons
+- `/sme options` — open the settings panel
 
 Commands that take `on|off` toggle when given no argument.
 

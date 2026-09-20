@@ -1,13 +1,13 @@
 local ADDON_NAME, ns = ...
 
-local opts -- SwampyForeverEnhancementsDB.options (account-wide)
+local opts -- SwampmanEnhancementsDB.options (account-wide)
 
 -------------------------------------------------------------------------------
 -- SavedVariables
 -------------------------------------------------------------------------------
 -- Everything is account-wide: none of these tweaks vary between characters.
 --
--- SwampyForeverEnhancementsDB = {
+-- SwampmanEnhancementsDB = {
 --   version = 1,
 --   options = { ... },
 -- }
@@ -23,9 +23,9 @@ ns.optionDefaults = {
 }
 
 local function InitDB()
-    SwampyForeverEnhancementsDB = SwampyForeverEnhancementsDB or { version = 1 }
-    SwampyForeverEnhancementsDB.options = SwampyForeverEnhancementsDB.options or {}
-    opts = SwampyForeverEnhancementsDB.options
+    SwampmanEnhancementsDB = SwampmanEnhancementsDB or { version = 1 }
+    SwampmanEnhancementsDB.options = SwampmanEnhancementsDB.options or {}
+    opts = SwampmanEnhancementsDB.options
     for k, v in next, ns.optionDefaults do
         if opts[k] == nil then
             opts[k] = v
@@ -197,7 +197,7 @@ end)
 -------------------------------------------------------------------------------
 
 local function Print(msg)
-    print("|cff33ff99Swampy:|r " .. msg)
+    print("|cff33ff99Swampman:|r " .. msg)
 end
 
 local function OnOff(flag)
@@ -231,9 +231,9 @@ local function Parse(word, current)
     return not current
 end
 
-SLASH_SWAMPY1 = "/sfe"
-SLASH_SWAMPY2 = "/swampy"
-SlashCmdList.SWAMPY = function(msg)
+SLASH_SWAMPMAN1 = "/sme"
+SLASH_SWAMPMAN2 = "/swampman"
+SlashCmdList.SWAMPMAN = function(msg)
     local cmd, arg = strsplit(" ", strlower(strtrim(msg or "")), 2)
     if cmd == "on" or cmd == "off" then
         opts.enabled = cmd == "on"
@@ -259,7 +259,7 @@ SlashCmdList.SWAMPY = function(msg)
         if tonumber(arg) then
             ns.SetCameraZoom(arg)
         elseif arg and arg ~= "" then
-            Print("zoom takes a number, e.g. /sfe zoom 2.6")
+            Print("zoom takes a number, e.g. /sme zoom 2.6")
         end
         PrintStatus()
     elseif cmd == "" or cmd == "status" then
@@ -268,15 +268,15 @@ SlashCmdList.SWAMPY = function(msg)
         ns.OpenOptions()
     else
         Print("commands:")
-        print("  /sfe - show what's on")
-        print("  /sfe on | off | toggle - quest automation as a whole")
-        print("  /sfe accept [on|off] - picking up quests")
-        print("  /sfe turnin [on|off] - handing in quests")
-        print("  /sfe nav [on|off] - the in-game navigation pin")
-        print("  /sfe zoom [value] - max camera distance (e.g. 2.6)")
-        print("  /sfe sharpen [on|off] - always apply resample sharpening")
-        print("  /sfe castanim [on|off] - the cast animation on action buttons")
-        print("  /sfe options - open the settings panel")
+        print("  /sme - show what's on")
+        print("  /sme on | off | toggle - quest automation as a whole")
+        print("  /sme accept [on|off] - picking up quests")
+        print("  /sme turnin [on|off] - handing in quests")
+        print("  /sme nav [on|off] - the in-game navigation pin")
+        print("  /sme zoom [value] - max camera distance (e.g. 2.6)")
+        print("  /sme sharpen [on|off] - always apply resample sharpening")
+        print("  /sme castanim [on|off] - the cast animation on action buttons")
+        print("  /sme options - open the settings panel")
         print("  Hold Shift while talking to an NPC to handle a quest by hand.")
     end
 end

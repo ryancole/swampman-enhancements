@@ -1,4 +1,4 @@
-# Swampy Forever Enhancements
+# Swampman Enhancements
 
 WoW Forever (1.60.1, Interface 16001) addon with a few quality-of-life
 tweaks:
@@ -23,7 +23,7 @@ tweaks:
 
 ## Files
 
-- `SwampyForeverEnhancements.toc` — addon manifest (must stay at the repo
+- `SwampmanEnhancements.toc` — addon manifest (must stay at the repo
   root — WoW looks for it at the top of the addon folder)
 - `src/Core.lua` — SavedVariables, the quest event handlers, slash commands
 - `src/CVars.lua` — the on/off CVar toggles (navigation pin, always
@@ -32,8 +32,7 @@ tweaks:
   CVar, and probes the client's limit for it
 - `src/ActionBars.lua` — hooks the action buttons' cast animation so it
   can be hidden
-- `src/Options.lua` — settings panel (Options -> AddOns -> Swampy Forever
-  Enhancements)
+- `src/Options.lua` — settings panel (Options -> AddOns -> Swampman Enhancements)
 - `assets/` — `logo.png` is the project art; `logo.tga` (addon list icon)
   is baked from it by `etc/logo.py` (Python + Pillow)
 - `etc/check.ps1` — local lint (luacheck and a LuaJIT parse over `src`)
@@ -117,13 +116,13 @@ the option live, so the checkbox works without a reload.
 ## Developing
 
 WoW loads an addon from a folder whose name matches the `.toc`, so link this
-repo into your AddOns directory as `SwampyForeverEnhancements` (PowerShell,
+repo into your AddOns directory as `SwampmanEnhancements` (PowerShell,
 adjust the game path):
 
 ```powershell
 New-Item -ItemType Junction `
-  -Path "C:\Program Files (x86)\World of Warcraft\_classic_beta_\Interface\AddOns\SwampyForeverEnhancements" `
-  -Target "C:\Users\Ryan\source\repos\quest-accept"
+  -Path "C:\Program Files (x86)\World of Warcraft\_classic_beta_\Interface\AddOns\SwampmanEnhancements" `
+  -Target "C:\Users\Ryan\source\repos\swampman-enhancements"
 ```
 
 `/reload` in-game picks up Lua changes; a full restart is only needed for
@@ -147,22 +146,22 @@ git tag v0.1.0 && git push origin master --tags
 
 ## Commands
 
-- `/sfe` (or `/swampy`) — show what's on
-- `/sfe on` / `/sfe off` / `/sfe toggle` — quest automation as a whole
-- `/sfe accept [on|off]` — picking up quests (toggles with no argument)
-- `/sfe turnin [on|off]` — handing in quests (toggles with no argument)
-- `/sfe nav [on|off]` — the in-game navigation pin (toggles with no argument)
-- `/sfe zoom [value]` — max camera distance, e.g. `/sfe zoom 2.6` (shows
+- `/sme` (or `/swampman`) — show what's on
+- `/sme on` / `/sme off` / `/sme toggle` — quest automation as a whole
+- `/sme accept [on|off]` — picking up quests (toggles with no argument)
+- `/sme turnin [on|off]` — handing in quests (toggles with no argument)
+- `/sme nav [on|off]` — the in-game navigation pin (toggles with no argument)
+- `/sme zoom [value]` — max camera distance, e.g. `/sme zoom 2.6` (shows
   the current value with no argument)
-- `/sfe sharpen [on|off]` — always apply resample sharpening (toggles with
+- `/sme sharpen [on|off]` — always apply resample sharpening (toggles with
   no argument)
-- `/sfe castanim [on|off]` — the cast animation on action buttons (toggles
+- `/sme castanim [on|off]` — the cast animation on action buttons (toggles
   with no argument)
-- `/sfe options` — open the settings panel
+- `/sme options` — open the settings panel
 
 ## Options
 
-Under Options -> AddOns -> Swampy Forever Enhancements, or `/sfe options`:
+Under Options -> AddOns -> Swampman Enhancements, or `/sme options`:
 
 - Quests: Enable auto accept, Enable auto turn in (both on by default)
 - Navigation: Show the in-game navigation pin (on by default)

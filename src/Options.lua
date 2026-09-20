@@ -1,6 +1,6 @@
 local ADDON_NAME, ns = ...
 
--- Canvas-style settings panel (Options -> AddOns -> Swampy Forever
+-- Canvas-style settings panel (Options -> AddOns -> Swampman
 -- Enhancements): the account-wide option checkboxes, one section per
 -- feature.
 
@@ -168,7 +168,7 @@ function ns.SetupOptions()
 
     local header = panel:CreateFontString(nil, "ARTWORK", "GameFontNormalHuge")
     header:SetPoint("TOPLEFT", LEFT_MARGIN, -10)
-    header:SetText(NORMAL_FONT_COLOR:WrapTextInColorCode("Swampy Forever Enhancements"))
+    header:SetText(NORMAL_FONT_COLOR:WrapTextInColorCode("Swampman Enhancements"))
 
     -- Substituted by the packager at release; raw keyword means a dev copy
     local version = C_AddOns.GetAddOnMetadata(ADDON_NAME, "Version")
@@ -225,23 +225,17 @@ function ns.SetupOptions()
             ns.ApplyCastAnim()
         end)
     castAnimCheck:SetPoint("TOPLEFT", barsHeader, "BOTTOMLEFT", -4, -6)
-    local barsNote = MakeNote(panel,
+    MakeNote(panel,
         "The fill that sweeps over a button's icon while its spell is cast or channelled. "
         .. "The game has no setting for this; unticked, the addon hides it as it starts.",
         castAnimCheck)
-
-    local hint = panel:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-    hint:SetPoint("TOP", barsNote, "BOTTOM", 0, -20)
-    hint:SetPoint("LEFT", panel, "LEFT", LEFT_MARGIN, 0)
-    hint:SetJustifyH("LEFT")
-    hint:SetText("Slash commands: /sfe on, /sfe off, /sfe accept, /sfe turnin, /sfe nav, /sfe zoom, /sfe sharpen, /sfe castanim")
 
     -- Required no-op handlers for canvas settings panels
     panel.OnCommit = function() end
     panel.OnDefault = function() end
     panel.OnRefresh = function() end
 
-    local category = Settings.RegisterCanvasLayoutCategory(panel, "Swampy Forever Enhancements")
+    local category = Settings.RegisterCanvasLayoutCategory(panel, "Swampman Enhancements")
     ns.settingsCategory = category
     Settings.RegisterAddOnCategory(category)
 end
