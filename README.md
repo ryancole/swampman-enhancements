@@ -17,13 +17,6 @@ tweaks:
 - **Always sharpen** — a checkbox for `ResampleAlwaysSharpen`, which
   applies the Resample Sharpness filter even at 100% render scale and has
   no entry in the settings menu.
-- **Cast animation on action buttons** — the fill that sweeps over an
-  icon while its spell is cast or channelled has no setting at all; the
-  addon can hide it.
-- **Totem bar alignment** — the shaman totem bar's buttons fill its box
-  from the left, leaving a gap on the right until all four totem
-  elements are known; the addon can lay them out from the right edge
-  instead.
 
 ## Files
 
@@ -34,10 +27,6 @@ tweaks:
   sharpen): what each is, and applying the options to the client
 - `src/Camera.lua` — max camera distance: reads, sets, and reapplies the
   CVar, and probes the client's limit for it
-- `src/ActionBars.lua` — hooks the action buttons' cast animation so it
-  can be hidden
-- `src/TotemBar.lua` — re-anchors the shaman totem bar's buttons to its
-  right edge
 - `src/Options.lua` — settings panel (Options -> AddOns -> Swampman Enhancements)
 - `assets/` — `logo.png` is the project art; `logo.tga` (addon list icon)
   is baked from it by `etc/logo.py` (Python + Pillow)
@@ -108,37 +97,6 @@ Enter. Whatever the client keeps after a set is what the controls show,
 and it is saved and reapplied at login. Until the slider or box is used
 the addon leaves the CVar alone.
 
-### Cast animation on action buttons
-
-Each action button's `PlaySpellCastAnim` runs on the player's cast and
-channel events and shows a fill animation over the icon. No setting or
-CVar gates it. At `PLAYER_LOGIN` the addon post-hooks that method on the
-twelve buttons of each of the eight action bars with `hooksecurefunc`;
-when the option is off, the hook hides the animation frame as soon as it
-is shown. That frame's own `OnHide` restores the cooldown swipe, so the
-rest of the button behaves as normal. The hooks stay in place and read
-the option live, so the checkbox works without a reload.
-
-### Totem bar alignment
-
-The shaman totem bar, `MultiCastActionBarFrame`, is a fixed-width box
-(230 points) that Edit Mode positions as a whole. Blizzard's layout
-anchors the Call of the Elements button to the box's bottom-left corner,
-the first totem slot to the right of that, each further slot to the one
-before it, and Totemic Recall to the last slot shown; the page frames
-that hold the spell icons sit over the slots with the same anchor. So
-with fewer than four elements known the buttons cluster at the left and
-the right of the box is empty. When the option is on, the addon measures
-what's shown (summon button, active slots, recall button) and re-anchors
-the summon button, the first slot, and the page frames so the row ends
-at the box's right edge; everything else follows through the chain.
-Blizzard's `MultiCastActionBarFrame_Update` resets those anchors on every
-refresh (login, learning a totem, changing the Call of the Elements
-page), so that function is post-hooked and the layout reapplied after
-it. Switching the option off sets the same anchors Blizzard would. The
-summon button is a secure frame, so nothing is moved during combat; a
-layout that comes due then waits for `PLAYER_REGEN_ENABLED`.
-
 ## Developing
 
 WoW loads an addon from a folder whose name matches the `.toc`, so link this
@@ -181,10 +139,6 @@ git tag v0.1.0 && git push origin master --tags
   the current value with no argument)
 - `/sme sharpen [on|off]` — always apply resample sharpening (toggles with
   no argument)
-- `/sme castanim [on|off]` — the cast animation on action buttons (toggles
-  with no argument)
-- `/sme totembar [left|right]` — which edge of its box the totem bar's
-  buttons fill from (toggles with no argument)
 - `/sme options` — open the settings panel
 
 ## Options
@@ -195,7 +149,5 @@ Under Options -> AddOns -> Swampman Enhancements, or `/sme options`:
 - Navigation: Show the in-game navigation pin (on by default)
 - Camera: Max camera distance slider and value box (untouched until used)
 - Graphics: Always sharpen (untouched until used)
-- Action bars: Show the cast animation on buttons (on by default), Align
-  the totem bar's buttons to the right (off by default)
 
 Settings are account-wide and saved between sessions.

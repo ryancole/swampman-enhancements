@@ -26,18 +26,14 @@ read_globals = {
     -- API functions
     "AcceptQuest", "AcknowledgeAutoAcceptQuest", "CompleteQuest",
     "ConfirmAcceptQuest", "CreateFrame", "CreateMinimalSliderFormatter", "GetActiveTitle",
-    "hooksecurefunc", "InCombatLockdown",
     "GetAvailableTitle",
     "GetNumActiveQuests", "GetNumAvailableQuests", "GetNumQuestChoices",
     "GetQuestReward", "GetTitleText", "IsQuestCompletable", "IsShiftKeyDown",
     "QuestFlagsPVP", "QuestGetAutoAccept", "SelectActiveQuest",
     "SelectAvailableQuest",
     -- Namespaces
-    "ActionButtonUtil", "C_AddOns", "C_CVar", "C_GossipInfo", "MinimalSliderWithSteppersMixin",
+    "C_AddOns", "C_CVar", "C_GossipInfo", "MinimalSliderWithSteppersMixin",
     "Settings",
-    -- The shaman totem bar (Blizzard_ActionBar/Shared/MultiCastActionBarFrame)
-    "MultiCastActionBarFrame", "MultiCastActionBarFrame_Update", "MultiCastSlotButton1",
-    "MultiCastSummonSpellButton", "MultiCastRecallSpellButton", "NUM_MULTI_CAST_PAGES",
     -- Frames, fonts, and constants
     "GameFontHighlight", "NORMAL_FONT_COLOR", "WHITE_FONT_COLOR",
 }
